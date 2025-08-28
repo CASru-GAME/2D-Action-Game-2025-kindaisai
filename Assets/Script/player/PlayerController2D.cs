@@ -21,6 +21,8 @@ public class PlayerController2D : MonoBehaviour
     private bool isDashing;
 
     private bool isJumping;
+    public bool isDoubleJump;
+    private bool isDoubleJumping;
     private float jumpTimeCounter;
 
     void Start()
@@ -32,24 +34,38 @@ public class PlayerController2D : MonoBehaviour
     {
         // 接地判定
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
+        if (isGrounded)
+        {
+            isDoubleJumping = false;
+        }
         // 左右移動
         float moveInput = Input.GetAxisRaw("Horizontal");
         float speed = (Input.GetKey(KeyCode.LeftShift)) ? dashSpeed : moveSpeed;
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
+        
         // ジャンプ開始（ボタンを押した瞬間）
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump"))
         {
-            isJumping = true;
-            jumpTimeCounter = maxJumpHoldTime;
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            if(isGrounded)
+            {
+                isJumping = true;
+                jumpTimeCounter = maxJumpHoldTime;
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
+            else if(isDoubleJump && !isJumping && !isDoubleJumping)
+            {   
+                isDoubleJumping = true;
+                isJumping = true;
+                jumpTimeCounter = maxJumpHoldTime;
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
         }
 
         // ジャンプボタン長押し中
-        if (Input.GetButton("Jump") && isJumping)
+        if(Input.GetButton("Jump") && isJumping)
         {
-            if (jumpTimeCounter > 0)
+            if(jumpTimeCounter > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + jumpHoldForce * Time.deltaTime * 60f);
                 jumpTimeCounter -= Time.deltaTime;
