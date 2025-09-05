@@ -20,8 +20,9 @@ public class PlayerController2D : MonoBehaviour
     private bool isGrounded;
     private bool isDashing;
 
+    public bool isReverse;
     private bool isJumping;
-    public bool isDoubleJump;
+    public bool DoubleJump;
     private bool isDoubleJumping;
     private float jumpTimeCounter;
 
@@ -41,7 +42,7 @@ public class PlayerController2D : MonoBehaviour
         // 左右移動
         float moveInput = Input.GetAxisRaw("Horizontal");
         float speed = (Input.GetKey(KeyCode.LeftShift)) ? dashSpeed : moveSpeed;
-        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+        rb.velocity = new Vector2((isReverse ? -1 : 1) * moveInput * speed, rb.velocity.y);
 
         
         // ジャンプ開始（ボタンを押した瞬間）
@@ -53,7 +54,7 @@ public class PlayerController2D : MonoBehaviour
                 jumpTimeCounter = maxJumpHoldTime;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
-            else if(isDoubleJump && !isJumping && !isDoubleJumping)
+            else if(DoubleJump && !isJumping && !isDoubleJumping)
             {   
                 isDoubleJumping = true;
                 isJumping = true;
