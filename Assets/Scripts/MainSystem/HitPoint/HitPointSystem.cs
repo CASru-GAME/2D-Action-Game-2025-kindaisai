@@ -18,7 +18,7 @@ public class HitPointSystem : MonoBehaviour
 
     }
 
-    public void AddDamage(int damage)
+    public void AddDamage(int damage)//ダメージを与える
     {
         HP -= damage;
         if (HP <= 0)
@@ -27,7 +27,7 @@ public class HitPointSystem : MonoBehaviour
         }
     }
 
-    public void  RecoverHP(int amount)
+    public void  RecoverHP(int amount)//体力を回復
     {
         HP += amount;
         if (HP > MaxHP)

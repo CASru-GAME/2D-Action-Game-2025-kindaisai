@@ -20,6 +20,10 @@ public class RespawnSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
             SceneManager.LoadScene("tomi");
     }
+    public void Retry()//リトライ(残基が残っていて死んだときに実行する)
+    {
+        SceneManager.LoadScene("tomi");
+    }
 
     public void ChangeRespawnPoint(Vector3 respawnPoint)
     {
