@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class RespawnSystem : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static Vector3 RespawnPoint = new Vector3(0f, 0f, 0f);
+    public static Vector3 RespawnPoint = new Vector3(-5, 0f, 0f);
     [SerializeField] GameObject PlayerPrefab;
     GameObject Player;
     string SceneName;
