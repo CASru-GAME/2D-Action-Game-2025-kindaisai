@@ -351,6 +351,10 @@ PrefabInstance:
       value: FireBar
       objectReference: {fileID: 0}
     - target: {fileID: 3876662073016537010, guid: f499df2251ddfb6409d8c959a120bb4e, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3876662073016537010, guid: f499df2251ddfb6409d8c959a120bb4e, type: 3}
       propertyPath: m_Simulated
       value: 1
       objectReference: {fileID: 0}
