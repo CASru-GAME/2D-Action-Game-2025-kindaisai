@@ -39,23 +39,23 @@ public class PlayerController2D : MonoBehaviour
         {
             isDoubleJumping = false;
         }
+
         // 左右移動
         float moveInput = Input.GetAxisRaw("Horizontal");
         float speed = (Input.GetKey(KeyCode.LeftShift)) ? dashSpeed : moveSpeed;
         rb.linearVelocity = new Vector2((isReverse ? -1 : 1) * moveInput * speed, rb.linearVelocity.y);
 
-        
         // ジャンプ開始（ボタンを押した瞬間）
         if (Input.GetButtonDown("Jump"))
         {
-            if(isGrounded)
+            if (isGrounded)
             {
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             }
-            else if(DoubleJump && !isJumping && !isDoubleJumping)
-            {   
+            else if (DoubleJump && !isJumping && !isDoubleJumping)
+            {
                 isDoubleJumping = true;
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
@@ -64,11 +64,14 @@ public class PlayerController2D : MonoBehaviour
         }
 
         // ジャンプボタン長押し中
-        if(Input.GetButton("Jump") && isJumping)
+        if (Input.GetButton("Jump") && isJumping)
         {
-            if(jumpTimeCounter > 0)
+            if (jumpTimeCounter > 0)
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + jumpHoldForce * Time.deltaTime * 60f);
+                rb.linearVelocity = new Vector2(
+                    rb.linearVelocity.x,
+                    rb.linearVelocity.y + jumpHoldForce * Time.deltaTime * 60f
+                );
                 jumpTimeCounter -= Time.deltaTime;
             }
             else
@@ -100,3 +103,6 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 }
+
+
+
