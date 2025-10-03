@@ -8,12 +8,11 @@ public class RespawnSystem : MonoBehaviour
     // Start is called before the first frame update
     public static Vector3 RespawnPoint = new Vector3(0f, 0f, 0f);
     [SerializeField] GameObject PlayerPrefab;
-    public GameObject Player;
+    GameObject Player;
     string SceneName;
     void Start()
     {
         Player = Instantiate(PlayerPrefab, RespawnPoint, Quaternion.identity);
-        GetComponent<StageClearSystem>().playerDataStore = Player.GetComponent<PlayerDataStore>();
         SceneName = SceneManager.GetActiveScene().name;
     }
 
