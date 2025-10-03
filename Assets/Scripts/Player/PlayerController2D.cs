@@ -42,7 +42,7 @@ public class PlayerController2D : MonoBehaviour
         // 左右移動
         float moveInput = Input.GetAxisRaw("Horizontal");
         float speed = (Input.GetKey(KeyCode.LeftShift)) ? dashSpeed : moveSpeed;
-        rb.linearVelocity = new Vector2((isReverse ? -1 : 1) * moveInput * speed, rb.linearVelocity.y);
+        rb.velocity = new Vector2((isReverse ? -1 : 1) * moveInput * speed, rb.velocity.y);
 
         
         // ジャンプ開始（ボタンを押した瞬間）
@@ -52,14 +52,14 @@ public class PlayerController2D : MonoBehaviour
             {
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
             else if(DoubleJump && !isJumping && !isDoubleJumping)
             {   
                 isDoubleJumping = true;
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
         }
 
@@ -68,7 +68,7 @@ public class PlayerController2D : MonoBehaviour
         {
             if(jumpTimeCounter > 0)
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + jumpHoldForce * Time.deltaTime * 60f);
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + jumpHoldForce * Time.deltaTime * 60f);
                 jumpTimeCounter -= Time.deltaTime;
             }
             else
