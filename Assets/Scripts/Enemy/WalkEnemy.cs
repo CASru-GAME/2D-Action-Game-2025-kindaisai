@@ -10,7 +10,6 @@ public class WalkEnemy : Enemy
     bool isLeft = true;
     private float moveSpeed = 2.5f;
     Rigidbody2D rb;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -60,13 +59,14 @@ public class WalkEnemy : Enemy
                     isLeft = true; 
             }
         }
+    }   
+    void OnBecameVisible()
+    {
+        isInsideCamera = true;
     }
 
-    void OnBecameInvisible() {
+    void OnBecameInvisible()
+    {
         isInsideCamera = false;
-    }
-    //　カメラ内に入った
-    void OnBecameVisible() {
-        isInsideCamera = true;
     }
 }
