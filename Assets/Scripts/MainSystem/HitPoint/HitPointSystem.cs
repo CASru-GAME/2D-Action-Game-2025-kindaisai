@@ -9,7 +9,8 @@ public class HitPointSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        MaxHP = 3;
+        HP = MaxHP;
     }
 
     // Update is called once per frame

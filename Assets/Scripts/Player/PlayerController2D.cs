@@ -25,6 +25,10 @@ public class PlayerController2D : MonoBehaviour
     public bool DoubleJump;
     private bool isDoubleJumping;
     private float jumpTimeCounter;
+    public bool isBounce;
+    private bool isBouncing;
+    [SerializeField] float MaxBounceTime;//跳ねてからジャンプできる時間
+    float BounceTime;//跳ねてからジャンプできる時間
 
     void Start()
     {
@@ -44,28 +48,35 @@ public class PlayerController2D : MonoBehaviour
         float speed = (Input.GetKey(KeyCode.LeftShift)) ? dashSpeed : moveSpeed;
         rb.velocity = new Vector2((isReverse ? -1 : 1) * moveInput * speed, rb.velocity.y);
 
-        
+
         // ジャンプ開始（ボタンを押した瞬間）
         if (Input.GetButtonDown("Jump"))
         {
-            if(isGrounded)
+            if (isGrounded)
             {
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
-            else if(DoubleJump && !isJumping && !isDoubleJumping)
-            {   
+            else if (DoubleJump && !isJumping && !isDoubleJumping)
+            {
                 isDoubleJumping = true;
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
+            else if (isBounce && !isBouncing)
+            {
+                isBounce = false;
+                isBouncing = true;
+                isJumping = true;
+                jumpTimeCounter = maxJumpHoldTime;
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
         }
-
         // ジャンプボタン長押し中
         if(Input.GetButton("Jump") && isJumping)
-        {
+        {   
             if(jumpTimeCounter > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + jumpHoldForce * Time.deltaTime * 60f);
@@ -74,6 +85,7 @@ public class PlayerController2D : MonoBehaviour
             else
             {
                 isJumping = false;
+                isBouncing = false;
             }
         }
 
@@ -81,12 +93,23 @@ public class PlayerController2D : MonoBehaviour
         if (Input.GetButtonUp("Jump"))
         {
             isJumping = false;
+            isBouncing = false;
         }
 
         // キャラの向きを入力方向に合わせる（スプライト反転）
         if (moveInput != 0)
         {
             transform.localScale = new Vector3(Mathf.Sign(moveInput), 1, 1);
+        }
+        //時間がたったらジャンプボタンをしても跳ねなくなる
+        if(isBounce)
+        {
+            BounceTime -= Time.deltaTime;
+            if(BounceTime <= 0)
+            {
+                BounceTime = MaxBounceTime;
+                isBounce = false;
+            }
         }
     }
 
