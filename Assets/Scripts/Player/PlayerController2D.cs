@@ -28,7 +28,7 @@ public class PlayerController2D : MonoBehaviour
     public bool isBounce;
     private bool isBouncing;
     [SerializeField] float MaxBounceTime;//跳ねてからジャンプできる時間
-    float BounceTime;//跳ねてからジャンプできる時間
+    float BounceTime;//跳ねてからジャンプできる残りの時間
 
     void Start()
     {

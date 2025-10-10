@@ -145,7 +145,7 @@ MonoBehaviour:
   isReverse: 0
   DoubleJump: 0
   isBounce: 0
-  MaxBounceTime: 0.25
+  MaxBounceTime: 0.4
 --- !u!114 &3901975941933372175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d503b49bbe42a429e79a20cbfc1974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InvincibleTime: 2
+  BlinkingCycle: 0.2
 --- !u!114 &-3039714045489624179
 MonoBehaviour:
   m_ObjectHideFlags: 0
