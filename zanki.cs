@@ -1,11 +1,11 @@
 public class zanki
 
 {
-    private Player player;
+    private Playerlife player;
 
     public zanki()
     {
-        player = new Player(); 
+        player = new Playerlife(); 
     }
 
   
