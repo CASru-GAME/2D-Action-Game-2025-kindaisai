@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     public int HP { get; protected set; }
     public Collider2D EnemyCollider;
     [SerializeField] float BounceForce;
+    bool isInvincible;
+    float cur_InvincibleTime;//残りの無敵時間
+    [SerializeField] float InvincibleTime;//無敵時間
     // Start is called before the first frame update
     void Start()
     {
@@ -17,9 +20,15 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
+    virtual protected void Update()
+    {   
+        if(isInvincible)
+        {
+            cur_InvincibleTime -= Time.deltaTime;
+            
+            if (cur_InvincibleTime <= 0)
+            isInvincible = false;
+        }
     }
 
     void AddDamage(int damage)
@@ -32,15 +41,20 @@ public class Enemy : MonoBehaviour
         }
     }
     public void SteppedOn(Collider2D collision, int damage)
-    {
-        Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(rb.velocity.x, math.max(rb.velocity.y, BounceForce));
-        collision.GetComponent<PlayerController2D>().isBounce = true;
+    {   
+        if(!isInvincible)
+        {   
+            isInvincible = true;
+            Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
+            rb.velocity = new Vector2(rb.velocity.x, math.max(rb.velocity.y, BounceForce));
+            collision.GetComponent<PlayerController2D>().isBounce = true;
 
-        AddDamage(damage);
+            cur_InvincibleTime = InvincibleTime;
+            AddDamage(damage);
+        }
     }
     
-    public virtual void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerStay2D(Collider2D collision)
     {
         List<ContactPoint2D> contacts = new List<ContactPoint2D>();
         collision.GetContacts(contacts);
@@ -50,13 +64,14 @@ public class Enemy : MonoBehaviour
         {
             foreach (ContactPoint2D p in contacts)
             {
-                if (p.point.y < transform.position.y + transform.localScale.y/2.0f + 0.1f)//踏めていなかったらプレイヤーがダメージを受ける
+                if (p.point.y < transform.position.y + transform.localScale.y / 2.0f + 0.1f)//踏めていなかったらプレイヤーがダメージを受ける
                 {
                     playerDataStore.HitPointSystem.AddDamage(1);
                     return;
                 }
             }
-            SteppedOn(collision, 1);
+            
+            SteppedOn(collision, 1);    
         }
     }
     public void OnTriggerExit2D(Collider2D collision)

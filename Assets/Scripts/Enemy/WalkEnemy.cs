@@ -17,8 +17,10 @@ public class WalkEnemy : Enemy
     }
 
     // Update is called once per frame
-    void Update()
+    override protected void Update()
     {
+        base.Update();
+
         if (isInsideCamera)
         {
             if (isLeft)
@@ -34,9 +36,9 @@ public class WalkEnemy : Enemy
         }
     }
 
-    public override void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerStay2D(Collider2D collision)
     {
-        base.OnTriggerEnter2D(collision);
+        base.OnTriggerStay2D(collision);
         
         if (collision.GetComponent<PlayerDataStore>() == null)
         if (isLeft) isLeft = false;
@@ -50,7 +52,7 @@ public class WalkEnemy : Enemy
         {
             if (isLeft)
             {
-                if (transform.position.x - transform.localScale.x / 2f <= collision.transform.position.x - collision.transform.localScale.x / 2f)
+                if (transform.position.x + transform.localScale.x / 2f <= collision.transform.position.x - collision.transform.localScale.x / 2f)
                     isLeft = false;
             }
             else

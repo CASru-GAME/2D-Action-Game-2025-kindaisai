@@ -8,14 +8,16 @@ public class HitPointSystem : MonoBehaviour
     public int MaxHP { get; private set; }
     bool isInvincible;
     [SerializeField] float InvincibleTime;//無敵時間
+    PlayerLife playerLife;
     float cur_InvincibleTime;//残りの無敵時間
     [SerializeField] float BlinkingCycle;//ダメージを食らったときの点滅周期
     float cur_Blinking;//点滅時間
     SpriteRenderer sr;
     // Start is called before the first frame update
     void Start()
-    {   
+    {
         sr = GetComponent<SpriteRenderer>();
+        playerLife = GetComponent<PlayerLife>();
         MaxHP = 3;
         HP = MaxHP;
     }
@@ -56,7 +58,7 @@ public class HitPointSystem : MonoBehaviour
             cur_Blinking = BlinkingCycle;
             if (HP <= 0)
             {
-                //残基を減らす
+                playerLife.LoseLife();
             }
             Debug.Log(HP);
         }

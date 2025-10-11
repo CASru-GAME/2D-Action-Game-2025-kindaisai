@@ -8,7 +8,8 @@ public class PlayerDataStore : MonoBehaviour
     public ItemSystem ItemSystem{ get; private set; }
     public ItemTable ItemTable{ get; private set; }
     public ScoreSystem ScoreSystem { get; private set; }
-    public HitPointSystem HitPointSystem{ get; private set; }
+    public HitPointSystem HitPointSystem { get; private set; }
+    public PlayerLife playerLife{ get; private set; }
 
     void Start()
     {
@@ -16,5 +17,6 @@ public class PlayerDataStore : MonoBehaviour
         ItemSystem = GetComponent<ItemSystem>();
         ItemTable = GetComponent<ItemTable>();
         HitPointSystem = GetComponent<HitPointSystem>();
+        playerLife = GetComponent<PlayerLife>();
     }
 }
