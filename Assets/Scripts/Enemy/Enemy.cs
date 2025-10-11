@@ -52,8 +52,6 @@ public class Enemy : MonoBehaviour
             {
                 if (p.point.y < transform.position.y + transform.localScale.y/2.0f + 0.1f)//踏めていなかったらプレイヤーがダメージを受ける
                 {
-                    collision.GetComponent<HitPointSystem>().AddDamage(1);
-                    Physics2D.IgnoreCollision(EnemyCollider, collision, true);
                     playerDataStore.HitPointSystem.AddDamage(1);
                     return;
                 }
