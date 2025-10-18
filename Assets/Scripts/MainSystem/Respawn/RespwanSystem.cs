@@ -17,6 +17,7 @@ public class RespawnSystem : MonoBehaviour
     {
         SceneName = SceneManager.GetActiveScene().name;
         Player = Instantiate(PlayerPrefab, RespawnPoint, Quaternion.identity);
+        Player.GetComponent<PlayerLife>().respawnSystem = GetComponent<RespawnSystem>();
     }
 
     // Update is called once per frame
