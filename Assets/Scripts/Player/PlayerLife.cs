@@ -20,15 +20,8 @@ public class PlayerLife : MonoBehaviour
     // 残機を減らす
     public void LoseLife()
     {
-        if (Lives > 0)
-        {
             Lives--;
             respawnSystem.Retry();
-        }
-        else
-        {
-            GameOver();
-        }
     }
 
     // ゲームオーバー処理
