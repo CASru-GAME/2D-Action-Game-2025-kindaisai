@@ -6,12 +6,12 @@ using UnityEngine;
 public class WalkEnemy : Enemy
 {
     // Start is called before the first frame update
-    bool isInsideCamera;
     bool isLeft = true;
     private float moveSpeed = 2.5f;
     Rigidbody2D rb;
-    void Start()
-    {
+    override protected void Start()
+    {   
+        base.Start();
         rb = GetComponent<Rigidbody2D>();
         HP = 10;
     }
@@ -62,13 +62,4 @@ public class WalkEnemy : Enemy
             }
         }
     }   
-    void OnBecameVisible()
-    {
-        isInsideCamera = true;
-    }
-
-    void OnBecameInvisible()
-    {
-        isInsideCamera = false;
-    }
 }

@@ -8,15 +8,18 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int HP { get; protected set; }
+    [SerializeField] int initialHP;
+    protected bool isInsideCamera;
     public Collider2D EnemyCollider;
     [SerializeField] float BounceForce;
     bool isInvincible;
     float cur_InvincibleTime;//残りの無敵時間
     [SerializeField] float InvincibleTime;//無敵時間
+    [SerializeField] bool isStepping;//踏めるか敵か
     // Start is called before the first frame update
-    void Start()
+    virtual protected void Start()
     {
-
+        HP = initialHP;
     }
 
     // Update is called once per frame
@@ -32,9 +35,9 @@ public class Enemy : MonoBehaviour
     }
 
     void AddDamage(int damage)
-    {
+    {   Debug.Log(HP);
         HP -= damage;
-
+        Debug.Log(HP);
         if (HP <= 0)//死亡処理
         {
             Destroy(gameObject);
@@ -61,7 +64,7 @@ public class Enemy : MonoBehaviour
 
         PlayerDataStore playerDataStore = collision.GetComponent<PlayerDataStore>();
         if(playerDataStore != null)
-        {
+        {   
             foreach (ContactPoint2D p in contacts)
             {
                 if (p.point.y < transform.position.y + transform.localScale.y / 2.0f + 0.1f)//踏めていなかったらプレイヤーがダメージを受ける
@@ -70,13 +73,25 @@ public class Enemy : MonoBehaviour
                     return;
                 }
             }
-            
-            SteppedOn(collision, 1);    
+            if (isStepping)
+                SteppedOn(collision, 1);
+            else
+            playerDataStore.HitPointSystem.AddDamage(1);
         }
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.GetComponent<PlayerController2D>() != null)
-        Physics2D.IgnoreCollision(EnemyCollider, collision, false);
+        if (collision.GetComponent<PlayerController2D>() != null)
+            Physics2D.IgnoreCollision(EnemyCollider, collision, false);
+    }
+    
+    void OnBecameVisible()
+    {
+        isInsideCamera = true;
+    }
+
+    void OnBecameInvisible()
+    {
+        isInsideCamera = false;
     }
 }
