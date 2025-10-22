@@ -125,11 +125,13 @@ public class PlayerController2D : MonoBehaviour
             isBouncing = false;
         }
 
-        // キャラの向きを入力方向に合わせる（スプライト反転）
-        if (moveInput != 0)
+        // キャラの向きを速度に合わせる（スプライト反転）
+        if (rb.velocity.x > 0)
         {
-            transform.localScale = new Vector3(Mathf.Sign(moveInput), 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
         }
+        else if(rb.velocity.x < 0)
+        transform.localScale = new Vector3(-1, 1, 1);
         //時間がたったらジャンプボタンをしても跳ねなくなる
         if(isBounce)
         {
@@ -167,7 +169,7 @@ public class PlayerController2D : MonoBehaviour
                 rb.velocity = new Vector2(0, rb.velocity.y);
         }
     }
-    float SetAcceleration(float moveInput,float acceleration)
+    float SetAcceleration(float moveInput, float acceleration)
     {
         float accelerationSpeed;
         if (isOnIce)
@@ -178,8 +180,23 @@ public class PlayerController2D : MonoBehaviour
                 accelerationSpeed = moveInput * acceleration * iceBackward;
         }
         else
-        accelerationSpeed = moveInput * acceleration;
-        
+            accelerationSpeed = moveInput * acceleration;
+
         return accelerationSpeed;
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        MoveableBlock moveableBlock = collision.gameObject.GetComponent<MoveableBlock>();
+        if (moveableBlock != null)
+        {
+            if (Input.GetKey(KeyCode.K))
+            {
+                if (rb.velocity.x * (collision.gameObject.transform.position.x - transform.position.x) > 0)
+                    moveableBlock.Push(rb.velocity.x,transform.position,transform.localScale.x);
+                else if (rb.velocity.x * (collision.gameObject.transform.position.x - transform.position.x) < 0)
+                    moveableBlock.Pull(rb.velocity.x,transform.position,transform.localScale.x);
+            }
+        }
     }
 }
