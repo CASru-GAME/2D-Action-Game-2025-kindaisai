@@ -1,13 +1,13 @@
-public class Player
+public class Playerlife
 {
     public int Lives { get; private set; }
 
-    public Player(int initialLives)
+    public Playerlife(int initialLives)
     {
         Lives = initialLives;
     }
 
-    // 残機を減らす
+    // 
     public void LoseLife()
     {
         if (Lives > 0)
@@ -16,7 +16,7 @@ public class Player
         }
     }
 
-    // ゲームオーバー判定
+    // 
     public bool IsGameOver()
     {
         return Lives <= 0;
