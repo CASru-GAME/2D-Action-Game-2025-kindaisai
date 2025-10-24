@@ -21,7 +21,7 @@ public class IceObject : MonoBehaviour
         if (playerDataStore != null)
         {
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            rb.velocity += new Vector2(Mathf.Max(1f,rb.velocity.x/2f),0);
+            rb.velocity += new Vector2(Mathf.Max(0.4f,rb.velocity.x/4f),0);
         }
     }
     void OnTriggerStay2D(Collider2D collision)
