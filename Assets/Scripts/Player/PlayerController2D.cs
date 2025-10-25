@@ -1,3 +1,5 @@
+using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController2D : MonoBehaviour
@@ -5,6 +7,11 @@ public class PlayerController2D : MonoBehaviour
     [Header("移動設定")]
     [SerializeField] private float moveSpeed = 5f;    // 通常移動速度
     [SerializeField] private float dashSpeed = 8f;    // ダッシュ時の速度
+    [SerializeField] private float moveAcceleration;
+    [SerializeField] private float dashAcceleration;
+    public bool isOnIce;
+    [SerializeField] float iceForward;//氷の進行方向へのすべりやすさ
+    [SerializeField] float iceBackward;//氷の逆方向へのすべりやすさ
 
     [Header("ジャンプ設定")]
     [SerializeField] private float jumpForce = 7f;           // ジャンプ初速
@@ -25,6 +32,10 @@ public class PlayerController2D : MonoBehaviour
     public bool DoubleJump;
     private bool isDoubleJumping;
     private float jumpTimeCounter;
+    public bool isBounce;
+    private bool isBouncing;
+    [SerializeField] float MaxBounceTime;//跳ねてからジャンプできる時間
+    float BounceTime;//跳ねてからジャンプできる残りの時間
 
     void Start()
     {
@@ -39,12 +50,34 @@ public class PlayerController2D : MonoBehaviour
         {
             isDoubleJumping = false;
         }
-
         // 左右移動
         float moveInput = Input.GetAxisRaw("Horizontal");
-        float speed = (Input.GetKey(KeyCode.LeftShift)) ? dashSpeed : moveSpeed;
-        rb.linearVelocity = new Vector2((isReverse ? -1 : 1) * moveInput * speed, rb.linearVelocity.y);
+        float accelerationSpeed;
 
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            accelerationSpeed = SetAcceleration(moveInput, dashAcceleration);
+
+            if (Mathf.Abs(rb.velocity.x + (isReverse ? -1 : 1) * accelerationSpeed) <= dashSpeed)
+                rb.velocity += new Vector2((isReverse ? -1 : 1) * accelerationSpeed, 0);
+            else if (Mathf.Abs(rb.velocity.x) > dashSpeed)
+            Stop();
+        }
+        else
+        {
+            accelerationSpeed = SetAcceleration(moveInput, moveAcceleration);
+
+            if (Mathf.Abs(rb.velocity.x + (isReverse ? -1 : 1) * accelerationSpeed) <= moveSpeed)
+                rb.velocity += new Vector2((isReverse ? -1 : 1) * accelerationSpeed, 0);
+            else if (rb.velocity.x * moveInput < 0)
+                rb.velocity += new Vector2((isReverse ? -1 : 1) * accelerationSpeed, 0);
+            else if (Mathf.Abs(rb.velocity.x) > moveSpeed)
+                Stop();
+
+        }
+        if (moveInput == 0)
+            Stop();
+        
         // ジャンプ開始（ボタンを押した瞬間）
         if (Input.GetButtonDown("Jump"))
         {
@@ -52,31 +85,36 @@ public class PlayerController2D : MonoBehaviour
             {
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
             else if (DoubleJump && !isJumping && !isDoubleJumping)
             {
                 isDoubleJumping = true;
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
+            else if (isBounce && !isBouncing)
+            {
+                isBounce = false;
+                isBouncing = true;
+                isJumping = true;
+                jumpTimeCounter = maxJumpHoldTime;
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
         }
-
         // ジャンプボタン長押し中
-        if (Input.GetButton("Jump") && isJumping)
-        {
-            if (jumpTimeCounter > 0)
+        if(Input.GetButton("Jump") && isJumping)
+        {   
+            if(jumpTimeCounter > 0)
             {
-                rb.linearVelocity = new Vector2(
-                    rb.linearVelocity.x,
-                    rb.linearVelocity.y + jumpHoldForce * Time.deltaTime * 60f
-                );
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + jumpHoldForce * Time.deltaTime * 60f);
                 jumpTimeCounter -= Time.deltaTime;
             }
             else
             {
                 isJumping = false;
+                isBouncing = false;
             }
         }
 
@@ -84,12 +122,25 @@ public class PlayerController2D : MonoBehaviour
         if (Input.GetButtonUp("Jump"))
         {
             isJumping = false;
+            isBouncing = false;
         }
 
-        // キャラの向きを入力方向に合わせる（スプライト反転）
-        if (moveInput != 0)
+        // キャラの向きを速度に合わせる（スプライト反転）
+        if (rb.velocity.x > 0)
         {
-            transform.localScale = new Vector3(Mathf.Sign(moveInput), 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if(rb.velocity.x < 0)
+        transform.localScale = new Vector3(-1, 1, 1);
+        //時間がたったらジャンプボタンをしても跳ねなくなる
+        if(isBounce)
+        {
+            BounceTime -= Time.deltaTime;
+            if(BounceTime <= 0)
+            {
+                BounceTime = MaxBounceTime;
+                isBounce = false;
+            }
         }
     }
 
@@ -102,7 +153,50 @@ public class PlayerController2D : MonoBehaviour
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
+
+    void Stop()
+    {
+        if (rb.velocity.x > 0)
+        {
+            rb.velocity += new Vector2(isOnIce ? -moveAcceleration / 4f : -moveAcceleration / 2f, 0);
+            if (rb.velocity.x < 0)
+                rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+        else if (rb.velocity.x < 0)
+        {
+            rb.velocity += new Vector2(isOnIce ? moveAcceleration / 4f : moveAcceleration / 2f, 0);
+            if (rb.velocity.x > 0)
+                rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+    }
+    float SetAcceleration(float moveInput, float acceleration)
+    {
+        float accelerationSpeed;
+        if (isOnIce)
+        {
+            if (moveInput * rb.velocity.x > 0)
+                accelerationSpeed = moveInput * acceleration * iceForward;
+            else
+                accelerationSpeed = moveInput * acceleration * iceBackward;
+        }
+        else
+            accelerationSpeed = moveInput * acceleration;
+
+        return accelerationSpeed;
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        MoveableBlock moveableBlock = collision.gameObject.GetComponent<MoveableBlock>();
+        if (moveableBlock != null)
+        {
+            if (Input.GetKey(KeyCode.K))
+            {
+                if (rb.velocity.x * (collision.gameObject.transform.position.x - transform.position.x) > 0)
+                    moveableBlock.Push(rb.velocity.x,transform.position,transform.localScale.x);
+                else if (rb.velocity.x * (collision.gameObject.transform.position.x - transform.position.x) < 0)
+                    moveableBlock.Pull(rb.velocity.x,transform.position,transform.localScale.x);
+            }
+        }
+    }
 }
-
-
-
