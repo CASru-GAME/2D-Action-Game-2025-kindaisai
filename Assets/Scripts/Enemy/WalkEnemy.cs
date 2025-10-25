@@ -13,7 +13,6 @@ public class WalkEnemy : Enemy
     {   
         base.Start();
         rb = GetComponent<Rigidbody2D>();
-        HP = 10;
     }
 
     // Update is called once per frame
