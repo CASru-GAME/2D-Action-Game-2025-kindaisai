@@ -6,11 +6,11 @@ public class OnOffBlock : MonoBehaviour
     private SpriteRenderer sr;
     private Collider2D col;
 
-    [Header("ON時の色")]
-    public Color onColor = Color.blue;
+    [Header("ON時のスプライト")]
+    public Sprite on;
 
-    [Header("OFF時の色")]
-    public Color offColor = Color.red;
+    [Header("OFF時のスプライト")]
+    public Sprite off;
 
     void Awake()
     {
@@ -27,7 +27,7 @@ public class OnOffBlock : MonoBehaviour
 
     private void UpdateBlock()
     {
-        sr.color = isOn ? onColor : offColor;
+        sr.sprite = isOn ? on :off;
         col.enabled = isOn; // ONの時だけ当たり判定あり
     }
 }
