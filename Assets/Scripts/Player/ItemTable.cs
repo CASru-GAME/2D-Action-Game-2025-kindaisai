@@ -11,7 +11,7 @@ public class ItemTable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        items = new ItemEffect[2];
+        items = new ItemEffect[3];
 
         items[0] = new ItemEffect(-1f, (playerDataStore) =>
         {
@@ -30,6 +30,22 @@ public class ItemTable : MonoBehaviour
         {
             playerDataStore.PlayerController2D.isReverse = false;
             items[1].isActive = false;
+        });
+        items[2] = new ItemEffect(-1f, (playerDataStore) =>
+        {
+            playerDataStore.PlayerController2D.x_Speed = 6f;
+            playerDataStore.PlayerController2D.y_Speed = -2f;
+            playerDataStore.PlayerController2D.x_Acceleration = 0f;
+            playerDataStore.PlayerController2D.y_Acceleration = -10f;
+            playerDataStore.PlayerController2D.Repulsion = 0.1f;
+            playerDataStore.PlayerController2D.Bounce_num = 10;
+            playerDataStore.PlayerController2D.isShot = true;
+            playerDataStore.PlayerController2D.ShotInterval = 0.5f;
+            items[2].isActive = true;
+        }, (playerDataStore) =>
+        {
+            playerDataStore.PlayerController2D.isShot = false;
+            items[2].isActive = false;
         });        
     }
 }

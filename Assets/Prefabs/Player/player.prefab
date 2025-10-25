@@ -153,6 +153,14 @@ MonoBehaviour:
   DoubleJump: 0
   isBounce: 0
   MaxBounceTime: 0.4
+  x_Speed: 0
+  x_Acceleration: 0
+  y_Speed: 0
+  y_Acceleration: 0
+  Repulsion: 0
+  Bounce_num: 0
+  isShot: 0
+  magicBulletPrefab: {fileID: 1781386555218158745, guid: b347c2e20ce967c4ca3485d9591242e3, type: 3}
 --- !u!114 &3901975941933372175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d503b49bbe42a429e79a20cbfc1974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+
+  isInvincible: 0
+
   InvincibleTime: 2
   BlinkingCycle: 0.2
 --- !u!114 &-3039714045489624179

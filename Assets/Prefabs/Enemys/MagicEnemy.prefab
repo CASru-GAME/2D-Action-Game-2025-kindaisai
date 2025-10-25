@@ -178,7 +178,10 @@ MonoBehaviour:
   InvincibleTime: 0.3
   isStepping: 1
   FiringInterval: 4
-  FiringSpeed: 2.5
+  x_Speed: 4
+  y_Speed: 0
+  x_Acceleration: -2
+  y_Acceleration: 0
   MagicBulletPrefab: {fileID: 1781386555218158745, guid: b347c2e20ce967c4ca3485d9591242e3, type: 3}
 --- !u!1 &6537433847929390334
 GameObject:

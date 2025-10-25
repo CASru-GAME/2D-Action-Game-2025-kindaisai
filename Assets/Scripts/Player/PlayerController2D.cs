@@ -37,13 +37,42 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] float MaxBounceTime;//跳ねてからジャンプできる時間
     float BounceTime;//跳ねてからジャンプできる残りの時間
 
+    GameObject mainCamera;
+    Vector3 PlayerScreenPos;
+    float Width,Height;
+
+    public float x_Speed;
+    public float x_Acceleration;
+    public float y_Speed;
+    public float y_Acceleration;
+    public float Repulsion;//反発係数
+    public int Bounce_num;//バウンド回数
+    public bool isShot;
+    public float ShotInterval;
+    float cur_ShotInterval;
+    [SerializeField] GameObject magicBulletPrefab;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        mainCamera = GameObject.Find("Main Camera");
+        BounceTime = MaxBounceTime;
+        Width = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0f,0f)).x - Camera.main.ScreenToWorldPoint(new Vector3(0f,0f,0f)).x;
+        Height = Camera.main.ScreenToWorldPoint(new Vector3(0f,Screen.height,0f)).y - Camera.main.ScreenToWorldPoint(new Vector3(0f,0f,0f)).y;
     }
 
     void Update()
-    {
+    {           
+        //カメラ追従
+        PlayerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+        if(PlayerScreenPos.x / Screen.width > 2f/3f)
+        mainCamera.transform.position = new Vector3(transform.position.x - Width /6f,mainCamera.transform.position.y,-10f);
+        else if(PlayerScreenPos.x / Screen.width < 1f/3f)
+        mainCamera.transform.position = new Vector3(transform.position.x + Width /6f,mainCamera.transform.position.y,-10f);
+        
+        if(PlayerScreenPos.y / Screen.height > 2f/3f)
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y - Height /6f,-10f);
+        else if(PlayerScreenPos.y / Screen.height < 1f/3f)
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height /6f,-10f);
         // 接地判定
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         if (isGrounded)
@@ -142,6 +171,13 @@ public class PlayerController2D : MonoBehaviour
                 isBounce = false;
             }
         }
+
+        if(cur_ShotInterval > 0f)
+        cur_ShotInterval -= Time.deltaTime;
+        
+
+        if(isShot && Input.GetKeyDown(KeyCode.R) && cur_ShotInterval <= 0f)
+        Shot();
     }
 
     private void OnDrawGizmosSelected()
@@ -198,5 +234,26 @@ public class PlayerController2D : MonoBehaviour
                     moveableBlock.Pull(rb.velocity.x,transform.position,transform.localScale.x);
             }
         }
+    }
+
+    void Shot()//魔法弾を発射する
+    {   
+        cur_ShotInterval = ShotInterval;
+
+        MagicBullet magicBullet = Instantiate(magicBulletPrefab).GetComponent<MagicBullet>();
+        magicBullet.x_Speed = x_Speed;
+        magicBullet.y_Speed = y_Speed;
+        magicBullet.x_Acceleration = x_Acceleration * transform.localScale.x;
+        magicBullet.y_Acceleration = y_Acceleration;
+        magicBullet.Repulsion = Repulsion;
+        magicBullet.Bounce_num = Bounce_num;
+        magicBullet.isPlayer = true;
+
+        if (transform.localScale.x == 1)
+            magicBullet.isLeft = false;
+        else
+            magicBullet.isLeft = true;
+
+        magicBullet.transform.position = new Vector3(transform.position.x + transform.localScale.x, transform.position.y + transform.localScale.y / 2f);
     }
 }

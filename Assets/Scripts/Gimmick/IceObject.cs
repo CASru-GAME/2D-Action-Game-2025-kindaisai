@@ -15,7 +15,7 @@ public class IceObject : MonoBehaviour
     {
 
     }
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         PlayerDataStore playerDataStore = collision.gameObject.GetComponent<PlayerDataStore>();
         if (playerDataStore != null)
@@ -24,14 +24,14 @@ public class IceObject : MonoBehaviour
             rb.velocity += new Vector2(Mathf.Max(0.4f,rb.velocity.x/4f),0);
         }
     }
-    void OnTriggerStay2D(Collider2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         PlayerDataStore playerDataStore = collision.gameObject.GetComponent<PlayerDataStore>();
         if (playerDataStore != null)
             playerDataStore.PlayerController2D.isOnIce = true;
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    void OnCollisionExit2D(Collision2D collision)
     {
         PlayerDataStore playerDataStore = collision.gameObject.GetComponent<PlayerDataStore>();
         if (playerDataStore != null)

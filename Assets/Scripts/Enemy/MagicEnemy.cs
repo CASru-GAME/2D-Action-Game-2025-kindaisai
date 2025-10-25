@@ -7,7 +7,12 @@ public class MagicEnemy : Enemy
     // Start is called before the first frame update
     [SerializeField] float FiringInterval;//発射間隔
     float cur_FiringInterval = 0;
-    [SerializeField] float FiringSpeed;//発射速度
+    [SerializeField] float x_Speed;//x軸の発射速度
+    [SerializeField] float y_Speed;//y軸の発射速度
+    [SerializeField] float x_Acceleration;//x軸の加速度
+    [SerializeField] float y_Acceleration;//y軸の加速度
+    [SerializeField] float Repulsion;//反発係数
+    [SerializeField] int Bounce_num;//バウンド回数
     [SerializeField] GameObject MagicBulletPrefab;
     MagicBullet magicBullet;
     override protected void Start()
@@ -33,7 +38,13 @@ public class MagicEnemy : Enemy
     void Shot()//魔法弾を発射する
     {
         magicBullet = Instantiate(MagicBulletPrefab).GetComponent<MagicBullet>();
-        magicBullet.Speed = FiringSpeed;
+        magicBullet.x_Speed = x_Speed;
+        magicBullet.y_Speed = y_Speed;
+        magicBullet.x_Acceleration = x_Acceleration * transform.localScale.x;
+        magicBullet.y_Acceleration = y_Acceleration;
+        magicBullet.Repulsion = Repulsion;
+        magicBullet.Bounce_num = Bounce_num;
+        magicBullet.isPlayer = false;
 
         if (transform.localScale.x == 1)
             magicBullet.isLeft = false;
