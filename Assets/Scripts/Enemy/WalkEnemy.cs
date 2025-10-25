@@ -9,12 +9,10 @@ public class WalkEnemy : Enemy
     bool isLeft = true;
     private float moveSpeed = 2.5f;
     Rigidbody2D rb;
-    [SerializeField]  int initialHP;
     override protected void Start()
     {   
         base.Start();
         rb = GetComponent<Rigidbody2D>();
-        HP = initialHP;
     }
 
     // Update is called once per frame
