@@ -37,7 +37,7 @@ public class ItemTable : MonoBehaviour
             playerDataStore.PlayerController2D.y_Speed = -2f;
             playerDataStore.PlayerController2D.x_Acceleration = 0f;
             playerDataStore.PlayerController2D.y_Acceleration = -10f;
-            playerDataStore.PlayerController2D.Repulsion = 0.1f;
+            playerDataStore.PlayerController2D.Repulsion = 1f;
             playerDataStore.PlayerController2D.Bounce_num = 10;
             playerDataStore.PlayerController2D.isShot = true;
             playerDataStore.PlayerController2D.ShotInterval = 0.5f;

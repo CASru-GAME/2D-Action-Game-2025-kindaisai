@@ -157,10 +157,10 @@ public class PlayerController2D : MonoBehaviour
         // キャラの向きを速度に合わせる（スプライト反転）
         if (rb.velocity.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
         else if(rb.velocity.x < 0)
-        transform.localScale = new Vector3(-1, 1, 1);
+        transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         //時間がたったらジャンプボタンをしても跳ねなくなる
         if(isBounce)
         {

@@ -40,18 +40,18 @@ public class MagicEnemy : Enemy
         magicBullet = Instantiate(MagicBulletPrefab).GetComponent<MagicBullet>();
         magicBullet.x_Speed = x_Speed;
         magicBullet.y_Speed = y_Speed;
-        magicBullet.x_Acceleration = x_Acceleration * transform.localScale.x;
+        magicBullet.x_Acceleration = x_Acceleration * transform.localScale.x / 2.08f;
         magicBullet.y_Acceleration = y_Acceleration;
         magicBullet.Repulsion = Repulsion;
         magicBullet.Bounce_num = Bounce_num;
         magicBullet.isPlayer = false;
 
-        if (transform.localScale.x == 1)
+        if (transform.localScale.x > 0)
             magicBullet.isLeft = false;
         else
             magicBullet.isLeft = true;
 
-        magicBullet.transform.position = new Vector3(transform.position.x + transform.localScale.x, transform.position.y + transform.localScale.y / 2f);
+        magicBullet.transform.position = new Vector3(transform.position.x + transform.localScale.x / 2.08f, transform.position.y + transform.localScale.y / 2.08f / 2f);
     }
 
 }

@@ -36,7 +36,6 @@ public class HitPointSystem : MonoBehaviour
                     sr.enabled = false;
                 else
                     sr.enabled = true;
-
                 cur_Blinking = BlinkingCycle;
             }
 
