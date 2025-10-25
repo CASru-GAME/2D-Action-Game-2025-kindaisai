@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     protected bool isInsideCamera;
     public Collider2D EnemyCollider;
     [SerializeField] float BounceForce;
-    bool isInvincible;
+    public bool isInvincible;
     float cur_InvincibleTime;//残りの無敵時間
     [SerializeField] float InvincibleTime;//無敵時間
     [SerializeField] bool isStepping;//踏めるか敵か
@@ -34,8 +34,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void AddDamage(int damage)
+    public void AddDamage(int damage)
     {   Debug.Log(HP);
+        isInvincible = true;
+        cur_InvincibleTime = InvincibleTime;
         HP -= damage;
         Debug.Log(HP);
         if (HP <= 0)//死亡処理

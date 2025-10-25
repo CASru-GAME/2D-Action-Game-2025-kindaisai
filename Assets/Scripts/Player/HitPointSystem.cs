@@ -6,7 +6,7 @@ public class HitPointSystem : MonoBehaviour
 {   
     public int HP { get; private set; }
     public int MaxHP { get; private set; }
-    bool isInvincible;
+    public bool isInvincible;
     [SerializeField] float InvincibleTime;//無敵時間
     PlayerLife playerLife;
     float cur_InvincibleTime;//残りの無敵時間
