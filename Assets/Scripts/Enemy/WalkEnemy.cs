@@ -25,16 +25,22 @@ public class WalkEnemy : Enemy
             if (isLeft)
             {
                 rb.velocity = new Vector2(-1 * moveSpeed, 0f);
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
             else
             {
                 rb.velocity = new Vector2(moveSpeed, 0f);
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
         }
     }
 
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        int layer = collision.gameObject.layer;
+        if (LayerMask.LayerToName(layer) == "Ground" || LayerMask.LayerToName(layer) == "Enemy")
+        isLeft = !isLeft;
+    }
     public override void OnTriggerStay2D(Collider2D collision)
     {
         base.OnTriggerStay2D(collision);
@@ -51,12 +57,12 @@ public class WalkEnemy : Enemy
         {
             if (isLeft)
             {
-                if (transform.position.x + transform.localScale.x / 2f <= collision.transform.position.x - collision.transform.localScale.x / 2f)
+                if (transform.position.x + transform.localScale.x / 2.08f / 2f <= collision.transform.position.x - collision.transform.localScale.x / 2f)
                     isLeft = false;
             }
             else
             {
-                if (transform.position.x + transform.localScale.x / 2f >= collision.transform.position.x + collision.transform.localScale.x / 2f)
+                if (transform.position.x + transform.localScale.x / 2.08f / 2f >= collision.transform.position.x + collision.transform.localScale.x / 2f)
                     isLeft = true; 
             }
         }

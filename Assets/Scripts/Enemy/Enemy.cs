@@ -67,18 +67,17 @@ public class Enemy : MonoBehaviour
         PlayerDataStore playerDataStore = collision.GetComponent<PlayerDataStore>();
         if(playerDataStore != null)
         {   
-            foreach (ContactPoint2D p in contacts)
-            {
-                if (p.point.y < transform.position.y + transform.localScale.y / 2.0f + 0.1f)//踏めていなかったらプレイヤーがダメージを受ける
-                {
+                float ypos = transform.position.y + 0.3f;
+                
+                if (collision.gameObject.transform.position.y < ypos)//踏めていなかったらプレイヤーがダメージを受ける
+                {  
                     playerDataStore.HitPointSystem.AddDamage(1);
                     return;
                 }
-            }
-            if (isStepping)
+                else if (isStepping)
                 SteppedOn(collision, 1);
-            else
-            playerDataStore.HitPointSystem.AddDamage(1);
+                else
+                playerDataStore.HitPointSystem.AddDamage(1);
         }
     }
     public void OnTriggerExit2D(Collider2D collision)

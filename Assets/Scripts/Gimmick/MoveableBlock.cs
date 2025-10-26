@@ -18,13 +18,13 @@ public class MoveableBlock : MonoBehaviour
     }
 
     public void Pull(float velocity,Vector3 position,float size)
-    {
-        transform.position = new Vector3(position.x + (-size + (velocity > 0 ? -1 : 1) * transform.localScale.x) / 2f + (velocity > 0 ? -0.01f : 0.01f), transform.position.y, 0);
+    {   
+        transform.position = new Vector3(position.x + (-size - (velocity > 0 ? 1 : -1) * transform.localScale.x) / 2.08f / 2f + (velocity > 0 ? 0.02f : -0.02f), transform.position.y, 0);
     }
     
     public void Push(float velocity,Vector3 position,float size)
-    {
-        transform.position = new Vector3(position.x + (size + (velocity > 0 ? 1 : -1) * transform.localScale.x) / 2f + (velocity > 0 ? 0.02f : -0.02f), transform.position.y, 0);
+    {   Debug.Log("push");
+        transform.position = new Vector3(position.x + (size + (velocity > 0 ? 1 : -1) * transform.localScale.x) / 2.08f / 2f + (velocity > 0 ? 0.02f : -0.02f), transform.position.y, 0);
     }
     
 }

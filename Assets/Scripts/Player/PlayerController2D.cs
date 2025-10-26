@@ -157,10 +157,10 @@ public class PlayerController2D : MonoBehaviour
         // キャラの向きを速度に合わせる（スプライト反転）
         if (rb.velocity.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         }
         else if(rb.velocity.x < 0)
-        transform.localScale = new Vector3(-1, 1, 1);
+        transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
         //時間がたったらジャンプボタンをしても跳ねなくなる
         if(isBounce)
         {
@@ -227,10 +227,10 @@ public class PlayerController2D : MonoBehaviour
         if (moveableBlock != null)
         {
             if (Input.GetKey(KeyCode.K))
-            {
-                if (rb.velocity.x * (collision.gameObject.transform.position.x - transform.position.x) > 0)
+            {   Debug.Log(rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x));
+                if (rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x) < 0)
                     moveableBlock.Push(rb.velocity.x,transform.position,transform.localScale.x);
-                else if (rb.velocity.x * (collision.gameObject.transform.position.x - transform.position.x) < 0)
+                else if (rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x) > 0)
                     moveableBlock.Pull(rb.velocity.x,transform.position,transform.localScale.x);
             }
         }
