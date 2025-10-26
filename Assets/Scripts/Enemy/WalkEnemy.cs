@@ -35,6 +35,12 @@ public class WalkEnemy : Enemy
         }
     }
 
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        int layer = collision.gameObject.layer;
+        if (LayerMask.LayerToName(layer) == "Ground" || LayerMask.LayerToName(layer) == "Enemy")
+        isLeft = !isLeft;
+    }
     public override void OnTriggerStay2D(Collider2D collision)
     {
         base.OnTriggerStay2D(collision);
