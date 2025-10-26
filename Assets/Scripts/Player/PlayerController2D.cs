@@ -226,13 +226,25 @@ public class PlayerController2D : MonoBehaviour
         MoveableBlock moveableBlock = collision.gameObject.GetComponent<MoveableBlock>();
         if (moveableBlock != null)
         {
-            if (Input.GetKey(KeyCode.K))
+            if (Input.GetKey(KeyCode.K) && !isJumping)
             {   Debug.Log(rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x));
-                if (rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x) < 0)
-                    moveableBlock.Push(rb.velocity.x,transform.position,transform.localScale.x);
-                else if (rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x) > 0)
+                    
+                if (rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x) > 0.0f)
                     moveableBlock.Pull(rb.velocity.x,transform.position,transform.localScale.x);
+                else if(rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x) < 0.0f)
+                moveableBlock.Push(rb.velocity.x,transform.position,transform.localScale.x);
             }
+            else
+            moveableBlock.rb.velocity = new Vector2(0f,moveableBlock.rb.velocity.y);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        MoveableBlock moveableBlock = collision.gameObject.GetComponent<MoveableBlock>();
+        if (moveableBlock != null)
+        {
+            moveableBlock.rb.velocity = new Vector2(0f,moveableBlock.rb.velocity.y);
         }
     }
 
