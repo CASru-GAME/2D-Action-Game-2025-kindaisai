@@ -82,4 +82,18 @@ public class MoveObject2 : MonoBehaviour
              }
          }
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {   
+        PlayerDataStore playerDataStore= collision.gameObject.GetComponent<PlayerDataStore>();
+        if(playerDataStore != null)
+        collision.transform.SetParent(transform);
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {   
+        PlayerDataStore playerDataStore= collision.gameObject.GetComponent<PlayerDataStore>();
+        if(playerDataStore != null)
+        collision.transform.SetParent(null);
+    }
 }

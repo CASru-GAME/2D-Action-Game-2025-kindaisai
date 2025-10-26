@@ -33,6 +33,7 @@ public class MagicEnemy : Enemy
                 cur_FiringInterval = 0;
             }
         }
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     void Shot()//魔法弾を発射する
