@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OnOffBlock : MonoBehaviour
 {
-    private bool isOn = true;
+    [SerializeField] private bool isOn = true;
     private SpriteRenderer sr;
     private Collider2D col;
 

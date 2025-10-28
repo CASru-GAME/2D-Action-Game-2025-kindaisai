@@ -17,9 +17,8 @@ public class MoveObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveVector = movePoint[(cur_point+1 > last_point) ? 0 : cur_point+1] - movePoint[cur_point] * speed;
-        Debug.Log(moveVector.normalized);
-        transform.position += moveVector.normalized * Time.deltaTime;
+        moveVector = movePoint[(cur_point+1 > last_point) ? 0 : cur_point+1] - movePoint[cur_point];
+        transform.position += moveVector.normalized * speed *Time.deltaTime;
         if(Mathf.Abs(transform.position.y-movePoint[(cur_point+1 > last_point) ? 0 : cur_point+1].y) < 0.1f && Mathf.Abs(transform.position.x-movePoint[(cur_point+1 > last_point) ? 0 : cur_point+1].x) < 0.1f)
         {
             cur_point++;

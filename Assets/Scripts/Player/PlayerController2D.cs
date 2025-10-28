@@ -24,7 +24,7 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;   // 地面レイヤー
 
     private Rigidbody2D rb;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
     private bool isDashing;
 
     public bool isReverse;
@@ -58,6 +58,7 @@ public class PlayerController2D : MonoBehaviour
         BounceTime = MaxBounceTime;
         Width = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0f,0f)).x - Camera.main.ScreenToWorldPoint(new Vector3(0f,0f,0f)).x;
         Height = Camera.main.ScreenToWorldPoint(new Vector3(0f,Screen.height,0f)).y - Camera.main.ScreenToWorldPoint(new Vector3(0f,0f,0f)).y;
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height /6f,-10f);
     }
 
     void Update()
@@ -69,12 +70,13 @@ public class PlayerController2D : MonoBehaviour
         else if(PlayerScreenPos.x / Screen.width < 1f/3f)
         mainCamera.transform.position = new Vector3(transform.position.x + Width /6f,mainCamera.transform.position.y,-10f);
         
-        if(PlayerScreenPos.y / Screen.height > 2f/3f)
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y - Height /6f,-10f);
+        if(PlayerScreenPos.y / Screen.height > 2f/ 3f)
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y - Height / 6f,-10f);
         else if(PlayerScreenPos.y / Screen.height < 1f/3f)
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height /6f,-10f);
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height / 6f,-10f);
+    
         // 接地判定
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        //isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         if (isGrounded)
         {
             isDoubleJumping = false;
@@ -110,7 +112,7 @@ public class PlayerController2D : MonoBehaviour
         // ジャンプ開始（ボタンを押した瞬間）
         if (Input.GetButtonDown("Jump"))
         {
-            if (isGrounded)
+            if (isGrounded && Mathf.Abs(rb.velocity.y) <= 0.0001f)
             {
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
@@ -180,27 +182,17 @@ public class PlayerController2D : MonoBehaviour
         Shot();
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        // 足元の判定をScene上に可視化
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
-    }
-
     void Stop()
     {
         if (rb.velocity.x > 0)
         {
-            rb.velocity += new Vector2(isOnIce ? -moveAcceleration / 4f : -moveAcceleration / 2f, 0);
+            rb.velocity += new Vector2(isOnIce ? -moveAcceleration / 3f : -moveAcceleration, 0);
             if (rb.velocity.x < 0)
                 rb.velocity = new Vector2(0, rb.velocity.y);
         }
         else if (rb.velocity.x < 0)
         {
-            rb.velocity += new Vector2(isOnIce ? moveAcceleration / 4f : moveAcceleration / 2f, 0);
+            rb.velocity += new Vector2(isOnIce ? moveAcceleration / 3f : moveAcceleration, 0);
             if (rb.velocity.x > 0)
                 rb.velocity = new Vector2(0, rb.velocity.y);
         }
@@ -222,31 +214,20 @@ public class PlayerController2D : MonoBehaviour
     }
 
     void OnTriggerStay2D(Collider2D collision)
-    {
-        MoveableBlock moveableBlock = collision.gameObject.GetComponent<MoveableBlock>();
-        if (moveableBlock != null)
-        {
-            if (Input.GetKey(KeyCode.K) && !isJumping)
-            {   Debug.Log(rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x));
-                    
-                if (rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x) > 0.0f)
-                    moveableBlock.Pull(rb.velocity.x,transform.position,transform.localScale.x);
-                else if(rb.velocity.x * (transform.position.x - collision.gameObject.transform.position.x) < 0.0f)
-                moveableBlock.Push(rb.velocity.x,transform.position,transform.localScale.x);
-            }
-            else
-            moveableBlock.rb.velocity = new Vector2(0f,moveableBlock.rb.velocity.y);
-        }
+    {   
+        int layer = collision.gameObject.layer;
+        if (LayerMask.LayerToName(layer) == "Ground")
+        isGrounded = true;
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        MoveableBlock moveableBlock = collision.gameObject.GetComponent<MoveableBlock>();
-        if (moveableBlock != null)
-        {
-            moveableBlock.rb.velocity = new Vector2(0f,moveableBlock.rb.velocity.y);
-        }
+        int layer = collision.gameObject.layer;
+        if (LayerMask.LayerToName(layer) == "Ground")
+        isGrounded = false;;
     }
+
+    
 
     void Shot()//魔法弾を発射する
     {   

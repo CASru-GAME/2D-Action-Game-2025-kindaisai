@@ -24,15 +24,14 @@ public class MagicEnemy : Enemy
     override protected void Update()
     {
         base.Update();
-        if (isInsideCamera)
-        {
+
             cur_FiringInterval += Time.deltaTime;
             if (cur_FiringInterval >= FiringInterval)
             {
                 Shot();
                 cur_FiringInterval = 0;
             }
-        }
+        
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 

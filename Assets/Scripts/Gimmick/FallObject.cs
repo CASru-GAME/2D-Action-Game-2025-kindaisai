@@ -5,7 +5,8 @@ using UnityEngine;
 public class FallObject : MonoBehaviour
 {   
     [SerializeField] float speed;
-    bool isfall;
+    [SerializeField] float time;
+    public bool isfall;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,8 @@ public class FallObject : MonoBehaviour
     void Update()
     {
         if(isfall)
+        time -= Time.deltaTime;
+        if(time <= 0)
         transform.position -= new Vector3(0f,speed * Time.deltaTime,0f);
     }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class WalkEnemy : Enemy
 {
     // Start is called before the first frame update
-    bool isLeft = true;
+    public bool isLeft = true;
     private float moveSpeed = 2.5f;
     Rigidbody2D rb;
     override protected void Start()
@@ -24,12 +24,12 @@ public class WalkEnemy : Enemy
         {
             if (isLeft)
             {
-                rb.velocity = new Vector2(-1 * moveSpeed, 0f);
+                rb.velocity = new Vector2(-1 * moveSpeed, rb.velocity.y);
                 transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
             else
             {
-                rb.velocity = new Vector2(moveSpeed, 0f);
+                rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
         }
@@ -45,9 +45,6 @@ public class WalkEnemy : Enemy
     {
         base.OnTriggerStay2D(collision);
         
-        if (collision.GetComponent<PlayerDataStore>() == null)
-        if (isLeft) isLeft = false;
-        else isLeft = true;
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -57,13 +54,13 @@ public class WalkEnemy : Enemy
         {
             if (isLeft)
             {
-                if (transform.position.x + transform.localScale.x / 2.08f / 2f <= collision.transform.position.x - collision.transform.localScale.x / 2f)
-                    isLeft = false;
+                //if (transform.position.x + transform.localScale.x / 2.08f / 2f <= collision.transform.position.x - collision.transform.localScale.x / 2f)
+                    //isLeft = false;
             }
             else
             {
-                if (transform.position.x + transform.localScale.x / 2.08f / 2f >= collision.transform.position.x + collision.transform.localScale.x / 2f)
-                    isLeft = true; 
+                //if (transform.position.x + transform.localScale.x / 2.08f / 2f >= collision.transform.position.x + collision.transform.localScale.x / 2f)
+                    //isLeft = true; 
             }
         }
     }   
