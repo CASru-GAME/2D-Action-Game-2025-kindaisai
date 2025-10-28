@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
         PlayerDataStore playerDataStore = collision.GetComponent<PlayerDataStore>();
         if(playerDataStore != null)
         {   
-                float ypos = transform.position.y + 0.3f;
+                float ypos = transform.position.y + 0.6f;
                 
                 if (collision.gameObject.transform.position.y < ypos)//踏めていなかったらプレイヤーがダメージを受ける
                 {  

@@ -14,7 +14,7 @@ public class PlayerLife : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.y < -10)
+        if (transform.position.y < -0.5)
         LoseLife();
     }
     // 残機を減らす
