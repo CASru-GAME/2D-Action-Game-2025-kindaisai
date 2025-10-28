@@ -182,16 +182,6 @@ public class PlayerController2D : MonoBehaviour
         Shot();
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        // 足元の判定をScene上に可視化
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
-    }
-
     void Stop()
     {
         if (rb.velocity.x > 0)
@@ -223,7 +213,7 @@ public class PlayerController2D : MonoBehaviour
         return accelerationSpeed;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {   
         int layer = collision.gameObject.layer;
         if (LayerMask.LayerToName(layer) == "Ground")
