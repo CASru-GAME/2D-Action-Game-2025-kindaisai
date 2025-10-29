@@ -112,7 +112,7 @@ public class PlayerController2D : MonoBehaviour
         // ジャンプ開始（ボタンを押した瞬間）
         if (Input.GetButtonDown("Jump"))
         {
-            if (isGrounded && Mathf.Abs(rb.velocity.y) <= 0.0001f)
+            if (isGrounded)
             {
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
