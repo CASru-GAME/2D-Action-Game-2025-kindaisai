@@ -13,7 +13,7 @@ public class RespawnSystem : MonoBehaviour
     GameObject Player;
     string SceneName;
     [SerializeField] GameObject LoadDisplay;
-    void Start()
+    void Awake()
     {
         SceneName = SceneManager.GetActiveScene().name;
         Player = Instantiate(PlayerPrefab, RespawnPoint, Quaternion.identity);
