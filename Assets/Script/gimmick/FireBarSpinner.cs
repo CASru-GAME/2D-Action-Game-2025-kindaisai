@@ -41,7 +41,7 @@ public class FireBarSpinner : MonoBehaviour
         if (bar == null && transform.childCount > 0) bar = transform.GetChild(0);
         if (bar != null && centerMode == CenterMode.AroundSelf)
         {
-            bar.localPosition = new Vector3(radius, 0f, 0f);
+            //bar.localPosition = new Vector3(radius, 0f, 0f);
             var rb2d = bar.GetComponent<Rigidbody2D>();
             if (rb2d != null) rb2d.simulated = false;
         }

@@ -58,22 +58,23 @@ public class PlayerController2D : MonoBehaviour
         BounceTime = MaxBounceTime;
         Width = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0f,0f)).x - Camera.main.ScreenToWorldPoint(new Vector3(0f,0f,0f)).x;
         Height = Camera.main.ScreenToWorldPoint(new Vector3(0f,Screen.height,0f)).y - Camera.main.ScreenToWorldPoint(new Vector3(0f,0f,0f)).y;
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height /6f,-10f);
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height / 4f,-10f);
     }
 
     void Update()
     {           
         //カメラ追従
         PlayerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
-        if(PlayerScreenPos.x / Screen.width > 2f/3f)
-        mainCamera.transform.position = new Vector3(transform.position.x - Width /6f,mainCamera.transform.position.y,-10f);
+        if(PlayerScreenPos.x / Screen.width > 1f/2f)
+        mainCamera.transform.position = new Vector3(transform.position.x,mainCamera.transform.position.y,-10f);
         else if(PlayerScreenPos.x / Screen.width < 1f/3f)
         mainCamera.transform.position = new Vector3(transform.position.x + Width /6f,mainCamera.transform.position.y,-10f);
         
         if(PlayerScreenPos.y / Screen.height > 2f/ 3f)
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y - Height / 6f,-10f);
-        else if(PlayerScreenPos.y / Screen.height < 1f/3f)
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height / 6f,-10f);
+        else if(PlayerScreenPos.y / Screen.height < 1f/4f)
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height / 4f,-10f);
+        
     
         // 接地判定
         //isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
