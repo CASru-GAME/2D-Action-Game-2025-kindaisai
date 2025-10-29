@@ -103,8 +103,14 @@ MonoBehaviour:
   x_Acceleration: 0
   y_Speed: 0
   y_Acceleration: 0
+  Repulsion: 0
+  Bounce_num: 0
+  isPlayer: 0
   isLeft: 0
   DeathTime: 3
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &-220801840123508587
 Rigidbody2D:
   serializedVersion: 4

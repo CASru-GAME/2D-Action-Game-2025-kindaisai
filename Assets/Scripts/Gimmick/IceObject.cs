@@ -21,7 +21,7 @@ public class IceObject : MonoBehaviour
         if (playerDataStore != null)
         {
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            rb.velocity += new Vector2(Mathf.Max(0.4f,rb.velocity.x/4f),0);
+            rb.velocity += new Vector2(Mathf.Sign(collision.transform.localScale.x) * Mathf.Max(4f,rb.velocity.x),0);
         }
     }
     void OnCollisionStay2D(Collision2D collision)
@@ -35,6 +35,12 @@ public class IceObject : MonoBehaviour
     {
         PlayerDataStore playerDataStore = collision.gameObject.GetComponent<PlayerDataStore>();
         if (playerDataStore != null)
+        {   
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             playerDataStore.PlayerController2D.isOnIce = false;
+            rb.velocity += new Vector2(Mathf.Sign(collision.transform.localScale.x) * Mathf.Max(4f,rb.velocity.x),0);
+        }
+
+            
     }
 }

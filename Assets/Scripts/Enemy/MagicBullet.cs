@@ -64,7 +64,7 @@ public class MagicBullet : MonoBehaviour
         {   
             float y_bullet = transform.position.y - transform.localScale.y / 2f;
             float y_floor = collision.gameObject.transform.position.y + collision.gameObject.transform.localScale.y / 2f;
-            if(Bounce_num > 0 && y_bullet >= y_floor - 0.1f && y_bullet <= y_floor + 0.1f)
+            if(Bounce_num > 0)
             {   
                 if(!isBouncing)
                 { 
