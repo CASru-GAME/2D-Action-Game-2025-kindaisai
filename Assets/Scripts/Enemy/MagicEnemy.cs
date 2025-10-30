@@ -15,9 +15,11 @@ public class MagicEnemy : Enemy
     [SerializeField] int Bounce_num;//バウンド回数
     [SerializeField] GameObject MagicBulletPrefab;
     MagicBullet magicBullet;
+    Animator animator;
     override protected void Start()
     {
         base.Start();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -38,9 +40,9 @@ public class MagicEnemy : Enemy
     void Shot()//魔法弾を発射する
     {
         magicBullet = Instantiate(MagicBulletPrefab).GetComponent<MagicBullet>();
-        magicBullet.x_Speed = x_Speed;
+        magicBullet.x_Speed = -x_Speed;
         magicBullet.y_Speed = y_Speed;
-        magicBullet.x_Acceleration = x_Acceleration * transform.localScale.x / 2.08f;
+        magicBullet.x_Acceleration = -x_Acceleration;
         magicBullet.y_Acceleration = y_Acceleration;
         magicBullet.Repulsion = Repulsion;
         magicBullet.Bounce_num = Bounce_num;
@@ -51,7 +53,7 @@ public class MagicEnemy : Enemy
         else
             magicBullet.isLeft = true;
 
-        magicBullet.transform.position = new Vector3(transform.position.x + transform.localScale.x / 2.08f, transform.position.y + transform.localScale.y / 2.08f / 2f);
+        magicBullet.transform.position = new Vector3(transform.position.x + -transform.localScale.x, transform.position.y + transform.localScale.y / 2f);
     }
 
 }
