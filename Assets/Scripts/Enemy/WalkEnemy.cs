@@ -9,12 +9,10 @@ public class WalkEnemy : Enemy
     public bool isLeft = true;
     private float moveSpeed = 2.5f;
     Rigidbody2D rb;
-    Animator animator;
     override protected void Start()
     {   
         base.Start();
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,12 +25,12 @@ public class WalkEnemy : Enemy
             if (isLeft)
             {
                 rb.velocity = new Vector2(-1 * moveSpeed, rb.velocity.y);
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
             else
             {
                 rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, 1);
             }
         }
     }
