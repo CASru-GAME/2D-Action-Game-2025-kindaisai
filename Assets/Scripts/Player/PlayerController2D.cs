@@ -54,8 +54,9 @@ public class PlayerController2D : MonoBehaviour
     bool isJumped;
 
     Animator animator;
-    AudioSource audioSource;
+    public AudioSource audioSource;
     [SerializeField] AudioClip jump_sound;
+    public AudioClip steped_sound;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -198,6 +199,9 @@ public class PlayerController2D : MonoBehaviour
         animator.speed = 1f;
         else
         animator.speed = 0f;
+
+        if(rb.velocity.x == 0) animator.SetBool("Idle",true);
+        else animator.SetBool("Idle",false);
     }
 
     void Stop()

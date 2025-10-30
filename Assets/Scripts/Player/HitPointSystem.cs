@@ -16,6 +16,7 @@ public class HitPointSystem : MonoBehaviour
     
     AudioSource audioSource;
     [SerializeField] AudioClip hit_Sound;
+    [SerializeField] HeartUI[] Hearts = new HeartUI[3];
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,9 @@ public class HitPointSystem : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         MaxHP = 3;
         HP = MaxHP;
+        Hearts[0] = GameObject.Find("Heart1").GetComponent<HeartUI>(); 
+        Hearts[1] = GameObject.Find("Heart2").GetComponent<HeartUI>(); 
+        Hearts[2] = GameObject.Find("Heart3").GetComponent<HeartUI>(); 
     }
 
     // Update is called once per frame
@@ -59,6 +63,7 @@ public class HitPointSystem : MonoBehaviour
             isInvincible = true;
             cur_InvincibleTime = InvincibleTime;
             cur_Blinking = BlinkingCycle;
+            Hearts[HP].BlackHeart();
             audioSource.PlayOneShot(hit_Sound);
             if (HP <= 0)
             {

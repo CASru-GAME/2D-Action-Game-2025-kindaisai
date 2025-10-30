@@ -165,7 +165,9 @@ MonoBehaviour:
   isShot: 0
   ShotInterval: 0
   magicBulletPrefab: {fileID: 1781386555218158745, guid: b347c2e20ce967c4ca3485d9591242e3, type: 3}
+  audioSource: {fileID: 0}
   jump_sound: {fileID: 8300000, guid: a67df64bd69cbac47b05a81fc1807664, type: 3}
+  steped_sound: {fileID: 8300000, guid: 9be493833f1a622428763a26e5244954, type: 3}
 --- !u!114 &3901975941933372175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +222,10 @@ MonoBehaviour:
   InvincibleTime: 1
   BlinkingCycle: 0.1
   hit_Sound: {fileID: 8300000, guid: 986618232b3111a42a5cfa8b24fef5ad, type: 3}
+  Hearts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &-3039714045489624179
 MonoBehaviour:
   m_ObjectHideFlags: 0

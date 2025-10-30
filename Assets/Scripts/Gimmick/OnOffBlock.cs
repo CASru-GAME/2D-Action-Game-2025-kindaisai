@@ -1,22 +1,22 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class OnOffBlock : MonoBehaviour
 {
-    [SerializeField] private bool isOn = true;
-    private SpriteRenderer sr;
-    private Collider2D col;
-
-    [Header("ON時のスプライト")]
-    public Sprite on;
-
-    [Header("OFF時のスプライト")]
-    public Sprite off;
+    [SerializeField] private bool isOn;
+    private TilemapCollider2D col;
+    [SerializeField] Tilemap tilemap;
+    [SerializeField] TileBase On,Off;
+    [SerializeField] Vector3Int[] Position;
 
     void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
-        col = GetComponent<Collider2D>();
+        col = GetComponent<TilemapCollider2D>();
         UpdateBlock();
+
+        foreach(var pos in Position)
+        if(isOn) tilemap.SetTile(pos,On);
+        else tilemap.SetTile(pos,Off);
     }
 
     public void ToggleBlock()
@@ -27,7 +27,9 @@ public class OnOffBlock : MonoBehaviour
 
     private void UpdateBlock()
     {
-        sr.sprite = isOn ? on :off;
         col.enabled = isOn; // ONの時だけ当たり判定あり
+        foreach(var pos in Position)
+        if(isOn) tilemap.SetTile(pos,On);
+        else tilemap.SetTile(pos,Off);
     }
 }

@@ -55,6 +55,8 @@ public class Enemy : MonoBehaviour
             collision.GetComponent<PlayerController2D>().isBounce = true;
 
             cur_InvincibleTime = InvincibleTime;
+            PlayerController2D playerController2D = collision.GetComponent<PlayerController2D>();
+            playerController2D.audioSource.PlayOneShot(playerController2D.steped_sound);
             AddDamage(damage);
         }
     }
