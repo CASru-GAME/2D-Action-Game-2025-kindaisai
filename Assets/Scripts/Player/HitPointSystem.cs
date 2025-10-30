@@ -13,15 +13,11 @@ public class HitPointSystem : MonoBehaviour
     [SerializeField] float BlinkingCycle;//ダメージを食らったときの点滅周期
     float cur_Blinking;//点滅時間
     SpriteRenderer sr;
-    
-    AudioSource audioSource;
-    [SerializeField] AudioClip hit_Sound;
     // Start is called before the first frame update
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         playerLife = GetComponent<PlayerLife>();
-        audioSource = GetComponent<AudioSource>();
         MaxHP = 3;
         HP = MaxHP;
     }
@@ -59,7 +55,6 @@ public class HitPointSystem : MonoBehaviour
             isInvincible = true;
             cur_InvincibleTime = InvincibleTime;
             cur_Blinking = BlinkingCycle;
-            audioSource.PlayOneShot(hit_Sound);
             if (HP <= 0)
             {
                 playerLife.LoseLife();
