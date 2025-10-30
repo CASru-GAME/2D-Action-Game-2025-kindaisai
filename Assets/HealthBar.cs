@@ -3,23 +3,18 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [Header("UI")]
-    public Image fill;                            
+    public Image fill;                 
+    public Transform followTarget;     
+    public Vector3 worldOffset = new Vector3(0f, 0.7f, 0f);
 
-    [Header("Follow")]
-    public Transform followTarget;                
-    public Vector3 worldOffset = new Vector3(0f, 0.3f, 0f);
-    public bool keepFacingCamera = true;          
-    public bool cancelParentFlip = true;          
-
-    HitPointSystem hp;
-    Camera cam;
+    private HitPointSystem hp;
+    private Camera cam;
 
     void Awake()
     {
         cam = Camera.main;
-        
-        hp = GetComponentInParent<HitPointSystem>();
+        if (!followTarget) followTarget = transform.parent;        
+        hp = GetComponentInParent<HitPointSystem>();               
     }
 
     void LateUpdate()
@@ -28,32 +23,25 @@ public class HealthBar : MonoBehaviour
         if (followTarget)
         {
             transform.position = followTarget.position + worldOffset;
-
-            if (keepFacingCamera && cam)
-                transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
-        }
-
-        
-        if (cancelParentFlip)
-        {
-            Transform basis = followTarget ? followTarget : transform.parent;
-            if (basis)
-            {
-                float sign = Mathf.Sign(basis.lossyScale.x); 
-                Vector3 ls = transform.localScale;
-                ls.x = sign < 0 ? -Mathf.Abs(ls.x) : Mathf.Abs(ls.x); 
-                transform.localScale = ls;
-            }
+            if (cam) transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
         }
 
         
         if (hp && fill)
         {
-            float ratio = (float)Mathf.Max(0, hp.HP) / Mathf.Max(1, hp.MaxHP);
-            fill.fillAmount = ratio;
+            fill.fillAmount = (float)Mathf.Max(0, hp.HP) / Mathf.Max(1, hp.MaxHP);
         }
+        
+        if (followTarget)
+        {
+            float parentSign = Mathf.Sign(followTarget.lossyScale.x); 
+            var ls = transform.localScale;
+            
+            ls.x = parentSign < 0 ? -Mathf.Abs(ls.x) : Mathf.Abs(ls.x);
+            transform.localScale = ls;
+        }
+
     }
 }
-
 
 
