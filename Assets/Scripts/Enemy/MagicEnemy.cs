@@ -16,7 +16,6 @@ public class MagicEnemy : Enemy
     [SerializeField] GameObject MagicBulletPrefab;
     MagicBullet magicBullet;
     Animator animator;
-    [SerializeField] float ypos;
     override protected void Start()
     {
         base.Start();
@@ -54,7 +53,7 @@ public class MagicEnemy : Enemy
         else
             magicBullet.isLeft = true;
 
-        magicBullet.transform.position = new Vector3(transform.position.x + -transform.localScale.x, transform.position.y + transform.localScale.y / 2f + ypos,0);
+        magicBullet.transform.position = new Vector3(transform.position.x + -transform.localScale.x, transform.position.y + transform.localScale.y / 2f);
     }
 
 }

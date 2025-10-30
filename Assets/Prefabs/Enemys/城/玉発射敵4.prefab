@@ -186,7 +186,6 @@ MonoBehaviour:
   Repulsion: 0
   Bounce_num: 0
   MagicBulletPrefab: {fileID: 1781386555218158745, guid: 11b2fd56f18bad045bb2cf5f94e64ed1, type: 3}
-  ypos: -0.4
 --- !u!1 &7069870408805286550
 GameObject:
   m_ObjectHideFlags: 0
