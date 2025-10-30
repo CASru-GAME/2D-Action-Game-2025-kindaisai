@@ -17,10 +17,13 @@ public class MagicEnemy : Enemy
     MagicBullet magicBullet;
     Animator animator;
     [SerializeField] float ypos;
+    Transform tr;
+    float playerxpos;
     override protected void Start()
     {
         base.Start();
         animator = GetComponent<Animator>();
+        tr = GameObject.Find("player(Clone)").transform;
     }
 
     // Update is called once per frame
@@ -36,6 +39,10 @@ public class MagicEnemy : Enemy
             }
         
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        playerxpos = tr.position.x;
+        if(playerxpos < transform.position.x) transform.localScale = new Vector3(1,1,1);
+        else transform.localScale = new Vector3(-1,1,1);
     }
 
     void Shot()//魔法弾を発射する

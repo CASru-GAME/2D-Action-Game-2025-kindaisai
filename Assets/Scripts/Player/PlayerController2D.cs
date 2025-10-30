@@ -94,7 +94,7 @@ public class PlayerController2D : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         float accelerationSpeed;
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        /*if (Input.GetKey(KeyCode.LeftShift))
         {
             accelerationSpeed = SetAcceleration(moveInput, dashAcceleration);
 
@@ -102,10 +102,9 @@ public class PlayerController2D : MonoBehaviour
                 rb.velocity += new Vector2((isReverse ? -1 : 1) * accelerationSpeed, 0);
             else if (Mathf.Abs(rb.velocity.x) > dashSpeed)
             Stop();
-        }
-        else
-        {
-            accelerationSpeed = SetAcceleration(moveInput, moveAcceleration);
+        }*/
+  
+        accelerationSpeed = SetAcceleration(moveInput, moveAcceleration);
 
             if (Mathf.Abs(rb.velocity.x + (isReverse ? -1 : 1) * accelerationSpeed) <= moveSpeed)
                 rb.velocity += new Vector2((isReverse ? -1 : 1) * accelerationSpeed, 0);
@@ -114,7 +113,7 @@ public class PlayerController2D : MonoBehaviour
             else if (Mathf.Abs(rb.velocity.x) > moveSpeed)
                 Stop();
 
-        }
+        
         if (moveInput == 0)
             Stop();
         
