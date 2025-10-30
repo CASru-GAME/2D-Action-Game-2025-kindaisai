@@ -75,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.95, y: 1.8}
+  m_Size: {x: 1, y: 1.8}
   m_EdgeRadius: 0
 --- !u!1 &7052898377773510002
 GameObject:
@@ -257,6 +257,7 @@ MonoBehaviour:
   InvincibleTime: 0.3
   isStepping: 1
   isLeft: 1
+  moveSpeed: 1
 --- !u!95 &4973467064516068506
 Animator:
   serializedVersion: 5

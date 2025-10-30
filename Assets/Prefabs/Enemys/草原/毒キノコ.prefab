@@ -180,6 +180,7 @@ MonoBehaviour:
   InvincibleTime: 0.3
   isStepping: 0
   isLeft: 1
+  moveSpeed: 1.5
 --- !u!95 &7162437747647388632
 Animator:
   serializedVersion: 5

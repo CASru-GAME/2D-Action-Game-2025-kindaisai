@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500778184447889927}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.83867836, y: 2.5611804, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15.500001, y: 0.50000095, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -179,7 +179,8 @@ MonoBehaviour:
   isInvincible: 0
   InvincibleTime: 0.3
   isStepping: 0
-  isLeft: 0
+  isLeft: 1
+  moveSpeed: 1.6
 --- !u!95 &3249016743183968505
 Animator:
   serializedVersion: 5
@@ -276,5 +277,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.95, y: 0.9}
+  m_Size: {x: 1, y: 0.7}
   m_EdgeRadius: 0
