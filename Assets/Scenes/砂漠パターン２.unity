@@ -20091,6 +20091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxTime: 500
   TimeText: {fileID: 1132463607}
+  playerLife: {fileID: 0}
 --- !u!4 &1111988357
 Transform:
   m_ObjectHideFlags: 0
