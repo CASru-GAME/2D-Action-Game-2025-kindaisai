@@ -20089,8 +20089,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118923c8c5174624ab361b5cbf8c1cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxTime: 13
+  MaxTime: 500
   TimeText: {fileID: 1132463607}
+  playerLife: {fileID: 0}
 --- !u!4 &1111988357
 Transform:
   m_ObjectHideFlags: 0

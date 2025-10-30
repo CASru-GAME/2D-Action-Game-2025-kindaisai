@@ -200,7 +200,11 @@ public class PlayerController2D : MonoBehaviour
         else
         animator.speed = 0f;
 
-        if(rb.velocity.x == 0) animator.SetBool("Idle",true);
+        if(rb.velocity.x == 0f)
+        {
+            animator.SetBool("Idle",true);
+            animator.speed = 1f;
+        }
         else animator.SetBool("Idle",false);
     }
 

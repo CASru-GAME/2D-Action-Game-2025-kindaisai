@@ -9,9 +9,11 @@ public class TimeSystem : MonoBehaviour
     [SerializeField] float MaxTime;
     [SerializeField] Text TimeText;
     float Cur_Time;
+    [SerializeField] PlayerLife playerLife;
     void Start()
     {
         Cur_Time = MaxTime;
+        playerLife = GameObject.Find("player(Clone)").GetComponent<PlayerLife>();
     }
 
     // Update is called once per frame
@@ -28,6 +30,7 @@ public class TimeSystem : MonoBehaviour
         if(Cur_Time <= 0f)
         {
             //残基を減らす
+            playerLife.LoseLife();
         }
     }
 }
