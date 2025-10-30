@@ -51,6 +51,11 @@ public class PlayerController2D : MonoBehaviour
     public float ShotInterval;
     float cur_ShotInterval;
     [SerializeField] GameObject magicBulletPrefab;
+    bool isJumped;
+
+    Animator animator;
+    AudioSource audioSource;
+    [SerializeField] AudioClip jump_sound;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -59,6 +64,8 @@ public class PlayerController2D : MonoBehaviour
         Width = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0f,0f)).x - Camera.main.ScreenToWorldPoint(new Vector3(0f,0f,0f)).x;
         Height = Camera.main.ScreenToWorldPoint(new Vector3(0f,Screen.height,0f)).y - Camera.main.ScreenToWorldPoint(new Vector3(0f,0f,0f)).y;
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height / 4f,-10f);
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -114,10 +121,13 @@ public class PlayerController2D : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             if (isGrounded)
-            {
+            {   
+                isJumped = true;
                 isJumping = true;
                 jumpTimeCounter = maxJumpHoldTime;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                animator.SetTrigger("JumpTrigger");
+                audioSource.PlayOneShot(jump_sound);
             }
             else if (DoubleJump && !isJumping && !isDoubleJumping)
             {
@@ -181,6 +191,13 @@ public class PlayerController2D : MonoBehaviour
 
         if(isShot && Input.GetKeyDown(KeyCode.R) && cur_ShotInterval <= 0f)
         Shot();
+
+        if(Mathf.Abs(rb.velocity.x) > 0f)
+        animator.speed = 1f;
+        else if(Mathf.Abs(rb.velocity.y) > 0.1f)
+        animator.speed = 1f;
+        else
+        animator.speed = 0f;
     }
 
     void Stop()
