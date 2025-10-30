@@ -59,7 +59,7 @@ public class HitPointSystem : MonoBehaviour
             {
                 playerLife.LoseLife();
             }
-            Debug.Log(HP);
+            Debug.Log($"HP after damage: {HP}/{MaxHP}");
         }
     }
 
