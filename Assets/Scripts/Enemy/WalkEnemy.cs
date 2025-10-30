@@ -7,7 +7,7 @@ public class WalkEnemy : Enemy
 {
     // Start is called before the first frame update
     public bool isLeft = true;
-    private float moveSpeed = 2.5f;
+    [SerializeField] private float moveSpeed = 2.5f;
     Rigidbody2D rb;
     Animator animator;
     override protected void Start()
