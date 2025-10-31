@@ -28,7 +28,7 @@ public class RespawnSystem : MonoBehaviour
     }
     public void Retry()//リトライ(残基が残っていて死んだときに実行する)
     {   
-        LoadDisplay.GetComponent<SpriteRenderer>().enabled = true;
+        LoadDisplay.SetActive(true);
         GetComponent<TimeSystem>().enabled = false;
         Invoke(new Action(() =>
         {

@@ -63,6 +63,7 @@ public class HitPointSystem : MonoBehaviour
             isInvincible = true;
             cur_InvincibleTime = InvincibleTime;
             cur_Blinking = BlinkingCycle;
+            if(HP > 0)
             Hearts[HP].BlackHeart();
             audioSource.PlayOneShot(hit_Sound);
             if (HP <= 0)

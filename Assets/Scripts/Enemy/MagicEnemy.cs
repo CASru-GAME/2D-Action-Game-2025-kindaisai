@@ -32,8 +32,8 @@ public class MagicEnemy : Enemy
         base.Update();
 
             cur_FiringInterval += Time.deltaTime;
-            if (cur_FiringInterval >= FiringInterval)
-            {
+            if (cur_FiringInterval >= FiringInterval && Mathf.Abs(transform.position.x-tr.position.x) < 15f)
+            {   
                 Shot();
                 cur_FiringInterval = 0;
             }

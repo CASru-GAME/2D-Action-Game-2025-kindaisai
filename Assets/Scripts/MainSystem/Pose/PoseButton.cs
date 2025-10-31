@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PoseButton : MonoBehaviour
 {   
@@ -32,5 +34,6 @@ public class PoseButton : MonoBehaviour
     public void BackButton()
     {
         //ステージ選択画面に戻る
+        SceneManager.LoadScene("StageSelect");
     }
 }

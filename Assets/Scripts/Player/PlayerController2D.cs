@@ -80,7 +80,7 @@ public class PlayerController2D : MonoBehaviour
         
         if(PlayerScreenPos.y / Screen.height > 2f/ 3f)
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y - Height / 6f,-10f);
-        else if(PlayerScreenPos.y / Screen.height < 1f/4f)
+        else if(PlayerScreenPos.y / Screen.height < 1f/4f && transform.position.y > 1.5f)
         mainCamera.transform.position = new Vector3(mainCamera.transform.position.x,transform.position.y + Height / 4f,-10f);
         
     
@@ -199,7 +199,7 @@ public class PlayerController2D : MonoBehaviour
         else
         animator.speed = 0f;
 
-        if(rb.velocity.x == 0f)
+        if(rb.velocity.x == 0f || !isGrounded)
         {
             animator.SetBool("Idle",true);
             animator.speed = 1f;
