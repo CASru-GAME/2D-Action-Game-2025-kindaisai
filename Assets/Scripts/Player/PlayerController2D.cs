@@ -94,6 +94,12 @@ public class PlayerController2D : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         float accelerationSpeed;
 
+        if(transform.position.x < -3f)
+        {
+            rb.velocity = new Vector2(0f,rb.velocity.y);
+            transform.position = new Vector3(-3f,transform.position.y,0f);
+        }
+
         /*if (Input.GetKey(KeyCode.LeftShift))
         {
             accelerationSpeed = SetAcceleration(moveInput, dashAcceleration);

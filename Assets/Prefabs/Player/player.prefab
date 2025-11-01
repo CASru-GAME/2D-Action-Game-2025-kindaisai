@@ -138,13 +138,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   dashSpeed: 7
-  moveAcceleration: 0.1
+  moveAcceleration: 0.3
   dashAcceleration: 0.16
   isOnIce: 0
   iceForward: 1.15
   iceBackward: 0.85
-  jumpForce: 2
-  jumpHoldForce: 1
+  jumpForce: 1.92
+  jumpHoldForce: 0.92
   maxJumpHoldTime: 0.1
   groundCheck: {fileID: 0}
   groundCheckRadius: 0.51
