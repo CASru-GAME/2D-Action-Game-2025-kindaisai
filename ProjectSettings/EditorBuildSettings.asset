@@ -18,16 +18,16 @@ EditorBuildSettings:
     path: Assets/Scenes/StageSelect.unity
     guid: 23ea1a75a808f42409799f459f551090
   - enabled: 1
-    path: Assets/Scenes/Stage1.unity
+    path: Assets/Scenes/Stage1_tomi.unity
     guid: c10dc2ed1c675144d8dac46e7f5c3a9b
   - enabled: 1
     path: Assets/Scenes/Stage2.unity
     guid: cb25497a87da89347a623f821a12eee3
   - enabled: 1
-    path: Assets/Scenes/Stage3.unity
+    path: Assets/Scenes/Stage3_tomi.unity
     guid: e112b273693817045ac4b4f397d3a385
   - enabled: 1
-    path: Assets/Scenes/Stage4.unity
+    path: Assets/Scenes/Stage4_tomi.unity
     guid: cbf682749b3f42a43b25e0cd74c57d2f
   - enabled: 0
     path: Assets/Scenes/Stage5.unity
