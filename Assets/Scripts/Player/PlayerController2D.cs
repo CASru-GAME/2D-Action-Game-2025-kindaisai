@@ -69,7 +69,7 @@ public class PlayerController2D : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    void FixedUpdate()
+    void Update()
     {           
         //カメラ追従
         PlayerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
