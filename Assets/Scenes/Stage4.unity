@@ -19419,7 +19419,7 @@ GameObject:
   - component: {fileID: 1460950869}
   - component: {fileID: 1460950868}
   - component: {fileID: 1460950867}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Off
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20816,7 +20816,7 @@ GameObject:
   - component: {fileID: 1737338582}
   - component: {fileID: 1737338581}
   - component: {fileID: 1737338580}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: On
   m_TagString: Untagged
   m_Icon: {fileID: 0}
