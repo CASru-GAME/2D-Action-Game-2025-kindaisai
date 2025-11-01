@@ -13,8 +13,10 @@ public class RespawnSystem : MonoBehaviour
     GameObject Player;
     string SceneName;
     [SerializeField] GameObject LoadDisplay;
+    [SerializeField] GameObject GameOver_Text;
     void Awake()
-    {
+    {   
+        Time.timeScale = 1;
         SceneName = SceneManager.GetActiveScene().name;
         Player = Instantiate(PlayerPrefab, RespawnPoint, Quaternion.identity);
         Player.GetComponent<PlayerLife>().respawnSystem = GetComponent<RespawnSystem>();
@@ -29,6 +31,7 @@ public class RespawnSystem : MonoBehaviour
     public void Retry()//リトライ(残基が残っていて死んだときに実行する)
     {   
         LoadDisplay.SetActive(true);
+        GameOver_Text.SetActive(true);
         GetComponent<TimeSystem>().enabled = false;
         Invoke(new Action(() =>
         {
