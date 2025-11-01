@@ -143,9 +143,9 @@ MonoBehaviour:
   isOnIce: 0
   iceForward: 1.15
   iceBackward: 0.85
-  jumpForce: 1.92
-  jumpHoldForce: 0.92
-  maxJumpHoldTime: 0.1
+  jumpForce: 2
+  jumpHoldForce: 1
+  maxJumpHoldTime: 0.15
   groundCheck: {fileID: 0}
   groundCheckRadius: 0.51
   groundLayer:
