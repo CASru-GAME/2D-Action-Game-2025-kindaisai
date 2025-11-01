@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   dashSpeed: 7
-  moveAcceleration: 0.1
+  moveAcceleration: 0.3
   dashAcceleration: 0.16
   isOnIce: 0
   iceForward: 1.15
